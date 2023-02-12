@@ -16,8 +16,8 @@ services:
     #   - ./db-data/postgres/:/var/lib/postgresql/data/
 
   general-service:
-    image: rekar2022/auth-service
-    container_name: auth-service
+    image: mbbustracker/bustracker
+    container_name: bus-tracker
     environment:
       - DATABASE_USER=${DATABASE_USER}
       - DATABASE_PASSWORD=${DATABASE_PASSWORD}
@@ -27,7 +27,7 @@ services:
       - TIME_ZONE=${TIME_ZONE}
     build:
       context: .
-      dockerfile: Dockerfile
+      dockerfile: ./auth/Dockerfile
     ports: 
       - "5000:8000"
     depends_on:
