@@ -7,7 +7,8 @@ import (
 type Company struct {
 	gorm.Model
 
-	Name        string   `json:"name"`
-	Location    Location `json:"location"`
-	Description string   `json:"description"`
+	Name        string  `json:"name"`
+	Longitude   float64 `json:"longitude"`
+	Latitude    float64 `json:"latitude"`
+	Description string  `json:"description"`
 }

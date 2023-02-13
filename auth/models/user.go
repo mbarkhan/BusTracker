@@ -20,7 +20,8 @@ type User struct {
 	//Phone          string    `json:"phone"`
 	//Shaba          string    `json:"sheba"`
 	VerifiedAt time.Time `json:"verified"`
-	Location   Location  `json:"location"`
+	Longitude  float64   `json:"longitude"`
+	Latitude   float64   `json:"latitude"`
 	//DetailedbookID int       `json:"detailedbookID"`
 
 }
