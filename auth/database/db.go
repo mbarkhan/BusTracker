@@ -1,6 +1,7 @@
 package database
 
 import (
+	"fmt"
 	"githubmbarkhanBusTracker/auth/config"
 
 	"gorm.io/driver/postgres"
@@ -11,6 +12,8 @@ var DB *gorm.DB
 
 func Connect() error {
 	config.Load()
+	fmt.Println("&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&")
+	fmt.Println(config.DSN)
 	db, err := gorm.Open(postgres.Open(config.DSN), &gorm.Config{})
 	if err != nil {
 

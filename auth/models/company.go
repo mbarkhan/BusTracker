@@ -6,8 +6,12 @@ import (
 
 type Company struct {
 	gorm.Model
-
-	Name        string   `json:"name"`
-	Location    Location `json:"location"`
-	Description string   `json:"description"`
+	//Auto ID
+	Name        string  `json:"name"`
+	AdminName   string  `json:"admin_name"`
+	AdminFamily string  `jaon:"admin_family"`
+	Mobile      string  `json:"mobile" gorm:"unique"`
+	Longitude   float64 `json:"longitude"`
+	Latitude    float64 `json:"latitude"`
+	Description string  `json:"description"`
 }

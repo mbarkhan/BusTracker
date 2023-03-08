@@ -1,26 +1,15 @@
 package models
 
 import (
-	"time"
-
 	"gorm.io/gorm"
 )
 
 type User struct {
 	gorm.Model
 	// Auto ID added by gorm
-	Name   string `json:"name"`
-	Family string `json:"family"`
-	//Username       string    `json:"username"`
+	Name       string `json:"name"`
+	Family     string `json:"family"`
 	NationalID string `json:"nationalID" gorm:"unique"` //This field should be unique
-	//BirthDate      time.Time `json:"birthDate"`
-	//Email          string    `json:"email"`
-	Password string `json:"password"`
-	Mobile   string `json:"mobile" gorm:"unique"` //This field should be unique
-	//Phone          string    `json:"phone"`
-	//Shaba          string    `json:"sheba"`
-	VerifiedAt time.Time `json:"verified"`
-	Location   Location  `json:"location"`
-	//DetailedbookID int       `json:"detailedbookID"`
-
+	Password   string `json:"password"`
+	Mobile     string `json:"mobile" gorm:"unique"` //This field should be unique
 }
