@@ -34,6 +34,6 @@ func (r *psnPathService) Update(psnPath *models.Passenger_Path) (models.Passenge
 	return r.psn_path.Update(psnPath)
 }
 
-func NewCompanyService(icmp CompanyServiceInt) CompanyServiceInt {
-	return &psnPathService{psn_path: icmp}
+func NewPsnPathService(ipsn PassengerPathServiceInt) PassengerPathServiceInt {
+	return &psnPathService{psn_path: ipsn}
 }
