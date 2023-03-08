@@ -1,3 +1,4 @@
+// To indicate a user could see which buses
 package models
 
 import "gorm.io/gorm"

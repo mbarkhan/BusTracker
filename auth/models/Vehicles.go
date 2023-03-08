@@ -8,7 +8,7 @@ type Vehicles struct {
 	FCompanyID   int    `json:"f_company_id"`
 	Vehiclename  string `json:"vehicle_name"`
 	Color        string `json:"color"`
-	VID          string `json:"v_id"`
+	VID          string `json:"v_id"` // Plak
 	PathName     string `json:"Path_Name"`
 	DriverName   string `json:"driver_name"`
 	DriverFamily string `json:"driver_family"`
