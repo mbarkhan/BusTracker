@@ -9,7 +9,7 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-type UserHandler interface {
+type UserHandlerInt interface {
 	Create(c *gin.Context)
 	Read(c *gin.Context)
 	Update(c *gin.Context)
@@ -21,7 +21,7 @@ type userHandler struct {
 	service services.UserServiceInt
 }
 
-func NewUserHandler(service services.UserServiceInt) UserHandler {
+func NewUserHandler(service services.UserServiceInt) UserHandlerInt {
 	return &userHandler{service}
 }
 

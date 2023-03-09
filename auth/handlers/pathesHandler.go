@@ -99,7 +99,7 @@ func (r *pathHandler) Delete(c *gin.Context) {
 		return
 	}
 
-	c.IndentedJSON(http.StatusOK, gin.H{"message": "User deleted successfully."})
+	c.IndentedJSON(http.StatusOK, gin.H{"message": "Path deleted successfully."})
 }
 
 func (r *pathHandler) List(c *gin.Context) {
