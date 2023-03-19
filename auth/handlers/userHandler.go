@@ -1,6 +1,8 @@
 package handlers
 
 import (
+	"fmt"
+	utils "githubmbarkhanBusTracker/auth/Utils"
 	"githubmbarkhanBusTracker/auth/models"
 	"githubmbarkhanBusTracker/auth/services"
 	"net/http"
@@ -15,6 +17,7 @@ type UserHandlerInt interface {
 	Update(c *gin.Context)
 	Delete(c *gin.Context)
 	List(c *gin.Context)
+	Login(c *gin.Context)
 }
 
 type userHandler struct {
@@ -110,4 +113,34 @@ func (r *userHandler) List(c *gin.Context) {
 	}
 
 	c.IndentedJSON(http.StatusOK, users)
+}
+func (r *userHandler) Login(c *gin.Context) {
+	mobnumber := c.Param("mobile")
+	password := c.Param("password")
+
+	user, err := r.service.GetUserByMobile(mobnumber)
+	if err != nil {
+		c.IndentedJSON(http.StatusBadRequest, gin.H{"message": err})
+		return
+	}
+
+	if user == nil {
+		c.IndentedJSON(http.StatusNotFound, gin.H{"message": "Mobile Number Not Found"})
+		return
+	}
+
+	err = utils.VerifyPassword(user.Password, password)
+	if err != nil {
+		c.IndentedJSON(http.StatusBadRequest, gin.H{"message": err}) //password Invalid
+		return
+	}
+
+	token, err := utils.NewToken(user.ID)
+	if err != nil {
+		c.IndentedJSON(http.StatusBadRequest, gin.H{"message": err}) //unable to create token
+		return
+	}
+
+	c.IndentedJSON(http.StatusOK, gin.H{"user": user, "token": fmt.Sprintf("Bearer %s", token)})
+	return
 }

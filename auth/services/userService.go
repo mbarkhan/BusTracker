@@ -7,7 +7,10 @@
 
 package services
 
-import "githubmbarkhanBusTracker/auth/models"
+import (
+	utils "githubmbarkhanBusTracker/auth/Utils"
+	"githubmbarkhanBusTracker/auth/models"
+)
 
 type UserServiceInt interface {
 	Create(*models.User) (models.User, error)
@@ -15,6 +18,7 @@ type UserServiceInt interface {
 	Update(*models.User) (models.User, error)
 	Delete(int) error
 	List() ([]models.User, error)
+	GetUserByMobile(string) (*models.User, error)
 }
 
 type userService struct {
@@ -26,6 +30,12 @@ func NewUserService(iuser UserServiceInt) UserServiceInt {
 }
 
 func (r *userService) Create(user *models.User) (models.User, error) {
+	var err error
+	//Password Encryption
+	user.Password, err = utils.EncryptPassword(user.Password)
+	if err != nil {
+		return models.User{}, err
+	}
 	return r.user.Create(user)
 }
 
@@ -43,4 +53,8 @@ func (r *userService) Delete(userId int) error {
 
 func (r *userService) List() ([]models.User, error) {
 	return r.user.List()
+}
+
+func (r *userService) GetUserByMobile(mobNum string) (*models.User, error) {
+	return r.user.GetUserByMobile(mobNum)
 }

@@ -18,6 +18,9 @@ type companyUserRepository struct {
 	db *gorm.DB
 }
 
+func NewCompanyUserRepository(db *gorm.DB) CompanyUserRepositoryInt {
+	return &companyUserRepository{db}
+}
 func (r *companyUserRepository) Create(company_user *models.Company_Users) (models.Company_Users, error) {
 	err := r.db.Create(&company_user).Error
 	if err != nil {

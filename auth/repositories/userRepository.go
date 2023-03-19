@@ -12,6 +12,7 @@ type UserRepositoryInt interface {
 	Update(*models.User) (models.User, error)
 	Delete(int) error
 	List() ([]models.User, error)
+	GetUserByMobile(string) (models.User, error)
 }
 
 type userRepository struct {
@@ -64,4 +65,15 @@ func (r *userRepository) List() ([]models.User, error) {
 		return []models.User{}, err
 	}
 	return users, nil
+}
+func (r *userRepository) GetUserByMobile(mobNum string) (models.User, error) {
+
+	user := models.User{}
+	error := r.db.Model(models.User{}).Where("mobile=?", mobNum).First(&user).Error
+
+	if error != nil {
+		return models.User{}, error
+	}
+
+	return user, nil
 }
