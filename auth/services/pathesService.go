@@ -1,6 +1,9 @@
 package services
 
-import "githubmbarkhanBusTracker/auth/models"
+import (
+	"githubmbarkhanBusTracker/auth/models"
+	"githubmbarkhanBusTracker/auth/repositories"
+)
 
 type PathesServiceInt interface {
 	Create(*models.Pathes) (models.Pathes, error)
@@ -11,7 +14,7 @@ type PathesServiceInt interface {
 }
 
 type PathesService struct {
-	pathes PathesServiceInt
+	pathes repositories.PathesRepositoryInt
 }
 
 func (r *PathesService) Create(path *models.Pathes) (models.Pathes, error) {
@@ -34,6 +37,6 @@ func (r *PathesService) Update(psnPath *models.Pathes) (models.Pathes, error) {
 	return r.pathes.Update(psnPath)
 }
 
-func NewPathService(ipth PathesServiceInt) PathesServiceInt {
+func NewPathService(ipth repositories.PathesRepositoryInt) PathesServiceInt {
 	return &PathesService{pathes: ipth}
 }

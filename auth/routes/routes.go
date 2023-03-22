@@ -50,6 +50,7 @@ func Api(r *gin.Engine) {
 	apiGroup.PUT("/", userHandler.Update)
 	apiGroup.DELETE("/:id", userHandler.Delete)
 	apiGroup.GET("/", userHandler.List)
+	apiGroup.POST("/login", userHandler.Login)
 
 	vehicleHandler := handlers.NewVehicleHandler(services.NewvehicleService(repositories.NewVehicleRepository(database.DB)))
 	apiGroup = r.Group("/user")

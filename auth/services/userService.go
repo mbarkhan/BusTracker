@@ -10,6 +10,7 @@ package services
 import (
 	utils "githubmbarkhanBusTracker/auth/Utils"
 	"githubmbarkhanBusTracker/auth/models"
+	"githubmbarkhanBusTracker/auth/repositories"
 )
 
 type UserServiceInt interface {
@@ -22,10 +23,10 @@ type UserServiceInt interface {
 }
 
 type userService struct {
-	user UserServiceInt
+	user repositories.UserRepositoryInt
 }
 
-func NewUserService(iuser UserServiceInt) UserServiceInt {
+func NewUserService(iuser repositories.UserRepositoryInt) UserServiceInt {
 	return &userService{user: iuser}
 }
 

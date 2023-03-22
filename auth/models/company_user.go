@@ -14,4 +14,5 @@ type Company_Users struct {
 	ConfirmAt  time.Time `json:"confirm_at"`
 	Longitude  float64   `json:"longitude"` // The Location of user to get on or off
 	Latitude   float64   `json:"latitude"`
+	ExpireDate time.Time `json:"expire_date"` // The Date that account Expires
 }

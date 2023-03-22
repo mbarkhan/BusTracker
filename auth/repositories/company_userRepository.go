@@ -2,6 +2,7 @@ package repositories
 
 import (
 	"githubmbarkhanBusTracker/auth/models"
+	"time"
 
 	"gorm.io/gorm"
 )
@@ -12,10 +13,16 @@ type CompanyUserRepositoryInt interface {
 	Update(*models.Company_Users) (models.Company_Users, error)
 	Delete(int) error
 	List() ([]models.Company_Users, error)
+	UpdateExpireDate(int, int, time.Time) error
 }
 
 type companyUserRepository struct {
 	db *gorm.DB
+}
+
+func (r *companyUserRepository) UpdateExpireDate(companyID int, userID int, creditDate time.Time) error {
+	return r.db.Model(&models.Company_Users{}).Where("f_user_id=? AND f_company_id=?",
+		userID, companyID).Update("expire_date", creditDate).Error
 }
 
 func NewCompanyUserRepository(db *gorm.DB) CompanyUserRepositoryInt {

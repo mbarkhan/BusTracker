@@ -115,8 +115,10 @@ func (r *userHandler) List(c *gin.Context) {
 	c.IndentedJSON(http.StatusOK, users)
 }
 func (r *userHandler) Login(c *gin.Context) {
-	mobnumber := c.Param("mobile")
-	password := c.Param("password")
+	mobnumber := c.Query("mobile")
+	password := c.Query("password")
+
+	fmt.Printf("mobile>>", mobnumber)
 
 	user, err := r.service.GetUserByMobile(mobnumber)
 	if err != nil {

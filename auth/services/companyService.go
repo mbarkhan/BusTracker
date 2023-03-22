@@ -1,6 +1,9 @@
 package services
 
-import "githubmbarkhanBusTracker/auth/models"
+import (
+	"githubmbarkhanBusTracker/auth/models"
+	"githubmbarkhanBusTracker/auth/repositories"
+)
 
 type CompanyServiceInt interface {
 	Create(*models.Company) (models.Company, error)
@@ -11,7 +14,7 @@ type CompanyServiceInt interface {
 }
 
 type companyService struct {
-	cmpService CompanyServiceInt
+	cmpService repositories.CompanyRepositoryInt
 }
 
 func (r *companyService) Create(cmp *models.Company) (models.Company, error) {
@@ -34,6 +37,6 @@ func (r *companyService) Update(cmp *models.Company) (models.Company, error) {
 	return r.cmpService.Update(cmp)
 }
 
-func NewCompanyService(icmp CompanyServiceInt) CompanyServiceInt {
+func NewCompanyService(icmp repositories.CompanyRepositoryInt) CompanyServiceInt {
 	return &companyService{cmpService: icmp}
 }
