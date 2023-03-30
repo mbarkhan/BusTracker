@@ -1,6 +1,9 @@
 package services
 
-import "githubmbarkhanBusTracker/auth/models"
+import (
+	"githubmbarkhanBusTracker/auth/models"
+	"githubmbarkhanBusTracker/auth/repositories"
+)
 
 type VehicleServiceInt interface {
 	Create(*models.Vehicles) (models.Vehicles, error)
@@ -11,7 +14,7 @@ type VehicleServiceInt interface {
 }
 
 type vehicleService struct {
-	vehicle VehicleServiceInt
+	vehicle repositories.VehicleRepositoryInt
 }
 
 func (r *vehicleService) Create(vhcl *models.Vehicles) (models.Vehicles, error) {
@@ -34,6 +37,6 @@ func (r *vehicleService) Update(vhcl *models.Vehicles) (models.Vehicles, error) 
 	return r.vehicle.Update(vhcl)
 }
 
-func NewvehicleService(ivcl VehicleServiceInt) VehicleServiceInt {
+func NewvehicleService(ivcl repositories.VehicleRepositoryInt) VehicleServiceInt {
 	return &vehicleService{vehicle: ivcl}
 }

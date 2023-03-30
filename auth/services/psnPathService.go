@@ -1,6 +1,9 @@
 package services
 
-import "githubmbarkhanBusTracker/auth/models"
+import (
+	"githubmbarkhanBusTracker/auth/models"
+	"githubmbarkhanBusTracker/auth/repositories"
+)
 
 type PassengerPathServiceInt interface {
 	Create(*models.Passenger_Path) (models.Passenger_Path, error)
@@ -11,7 +14,7 @@ type PassengerPathServiceInt interface {
 }
 
 type psnPathService struct {
-	psn_path PassengerPathServiceInt
+	psn_path repositories.PsnPathRepositoryInt
 }
 
 func (r *psnPathService) Create(psnPath *models.Passenger_Path) (models.Passenger_Path, error) {
@@ -34,6 +37,6 @@ func (r *psnPathService) Update(psnPath *models.Passenger_Path) (models.Passenge
 	return r.psn_path.Update(psnPath)
 }
 
-func NewCompanyService(icmp CompanyServiceInt) CompanyServiceInt {
-	return &psnPathService{psn_path: icmp}
+func NewPsnPathService(ipsn repositories.PsnPathRepositoryInt) PassengerPathServiceInt {
+	return &psnPathService{psn_path: ipsn}
 }

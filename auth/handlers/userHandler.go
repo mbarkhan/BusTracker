@@ -1,6 +1,8 @@
 package handlers
 
 import (
+	"fmt"
+	utils "githubmbarkhanBusTracker/auth/Utils"
 	"githubmbarkhanBusTracker/auth/models"
 	"githubmbarkhanBusTracker/auth/services"
 	"net/http"
@@ -9,19 +11,20 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-type UserHandler interface {
+type UserHandlerInt interface {
 	Create(c *gin.Context)
 	Read(c *gin.Context)
 	Update(c *gin.Context)
 	Delete(c *gin.Context)
 	List(c *gin.Context)
+	Login(c *gin.Context)
 }
 
 type userHandler struct {
 	service services.UserServiceInt
 }
 
-func NewUserHandler(service services.UserServiceInt) UserHandler {
+func NewUserHandler(service services.UserServiceInt) UserHandlerInt {
 	return &userHandler{service}
 }
 
@@ -110,4 +113,36 @@ func (r *userHandler) List(c *gin.Context) {
 	}
 
 	c.IndentedJSON(http.StatusOK, users)
+}
+func (r *userHandler) Login(c *gin.Context) {
+	mobnumber := c.Query("mobile")
+	password := c.Query("password")
+
+	fmt.Printf("mobile>>", mobnumber)
+
+	user, err := r.service.GetUserByMobile(mobnumber)
+	if err != nil {
+		c.IndentedJSON(http.StatusBadRequest, gin.H{"message": err})
+		return
+	}
+
+	if user == nil {
+		c.IndentedJSON(http.StatusNotFound, gin.H{"message": "Mobile Number Not Found"})
+		return
+	}
+
+	err = utils.VerifyPassword(user.Password, password)
+	if err != nil {
+		c.IndentedJSON(http.StatusBadRequest, gin.H{"message": err}) //password Invalid
+		return
+	}
+
+	token, err := utils.NewToken(user.ID)
+	if err != nil {
+		c.IndentedJSON(http.StatusBadRequest, gin.H{"message": err}) //unable to create token
+		return
+	}
+
+	c.IndentedJSON(http.StatusOK, gin.H{"user": user, "token": fmt.Sprintf("Bearer %s", token)})
+	return
 }
