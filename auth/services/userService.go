@@ -20,6 +20,7 @@ type UserServiceInt interface {
 	Delete(int) error
 	List() ([]models.User, error)
 	GetUserByMobile(string) (*models.User, error)
+	UserSubmittedCompanies(int) (*[]models.Company_Users, error)
 }
 
 type userService struct {
@@ -58,4 +59,9 @@ func (r *userService) List() ([]models.User, error) {
 
 func (r *userService) GetUserByMobile(mobNum string) (*models.User, error) {
 	return r.user.GetUserByMobile(mobNum)
+}
+
+// UserSubmittedCompanies implements UserServiceInt
+func (r *userService) UserSubmittedCompanies(userID int) (*[]models.Company_Users, error) {
+	return r.user.UserSubmittedCompanies(userID)
 }

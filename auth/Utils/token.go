@@ -18,11 +18,10 @@ var (
 	JwtSigningMethod = jwt.SigningMethodHS256.Name
 )
 
-func NewToken(userId uint) (string, error) {
-	userID := string(userId) // must be string
+func NewToken(userId uint, userType uint8) (string, error) {
 	claims := jwt.StandardClaims{
-		Id:        userID,
-		Issuer:    userID,
+		Id:        string(userId), // must be string
+		Issuer:    string(userType),
 		IssuedAt:  time.Now().Unix(),
 		ExpiresAt: time.Now().Add(time.Hour * 6).Unix(),
 	}
@@ -63,7 +62,7 @@ func ExtractToken(c *gin.Context) string {
 	return ""
 }
 
-func ExtractTokenID(c *gin.Context) (uint, error) {
+func ExtractTokenID(c *gin.Context) (uint, uint8, error) {
 
 	tokenString := ExtractToken(c)
 	token, err := jwt.Parse(tokenString, func(token *jwt.Token) (interface{}, error) {
@@ -73,15 +72,19 @@ func ExtractTokenID(c *gin.Context) (uint, error) {
 		return []byte(os.Getenv("API_SECRET")), nil
 	})
 	if err != nil {
-		return 0, err
+		return 0, 0, err
 	}
 	claims, ok := token.Claims.(jwt.MapClaims)
 	if ok && token.Valid {
 		uid, err := strconv.ParseUint(fmt.Sprintf("%.0f", claims["user_id"]), 10, 32)
 		if err != nil {
-			return 0, err
+			return 0, 0, err
 		}
-		return uint(uid), nil
+		utype, err := strconv.ParseUint(fmt.Sprintf("%.0f", claims["user_type"]), 10, 8)
+		if err != nil {
+			return 0, 0, err
+		}
+		return uint(uid), uint8(utype), nil
 	}
-	return 0, nil
+	return 0, 0, nil
 }

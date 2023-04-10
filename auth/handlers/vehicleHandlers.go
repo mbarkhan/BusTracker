@@ -1,6 +1,8 @@
 package handlers
 
 import (
+	"fmt"
+	utils "githubmbarkhanBusTracker/auth/Utils"
 	"githubmbarkhanBusTracker/auth/models"
 	"githubmbarkhanBusTracker/auth/services"
 	"net/http"
@@ -110,4 +112,34 @@ func (r *vehicleHandler) List(c *gin.Context) {
 	}
 
 	c.IndentedJSON(http.StatusOK, vehicles)
+}
+func (r *vehicleHandler) Login(c *gin.Context) {
+	mobnumber := c.Query("mobile")
+	password := c.Query("password")
+
+	vhcl, err := r.service.GetVehicleByMobile(mobnumber)
+	if err != nil {
+		c.IndentedJSON(http.StatusBadRequest, gin.H{"message": err})
+		return
+	}
+
+	if vhcl == nil {
+		c.IndentedJSON(http.StatusNotFound, gin.H{"message": "Mobile Number Not Found"})
+		return
+	}
+
+	err = utils.VerifyPassword(vhcl.Password, password)
+	if err != nil {
+		c.IndentedJSON(http.StatusBadRequest, gin.H{"message": err}) //password Invalid
+		return
+	}
+
+	token, err := utils.NewToken(vhcl.ID, 100)
+	if err != nil {
+		c.IndentedJSON(http.StatusBadRequest, gin.H{"message": err}) //unable to create token
+		return
+	}
+
+	c.IndentedJSON(http.StatusOK, gin.H{"user": vhcl, "token": fmt.Sprintf("Bearer %s", token)})
+	return
 }

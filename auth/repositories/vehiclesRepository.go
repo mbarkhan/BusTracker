@@ -12,6 +12,7 @@ type VehicleRepositoryInt interface {
 	Update(*models.Vehicles) (models.Vehicles, error)
 	Delete(int) error
 	List() ([]models.Vehicles, error)
+	GetVehicleByMobile(string) (*models.Vehicles, error)
 }
 
 type vehicleRepository struct {
@@ -70,4 +71,15 @@ func (r *vehicleRepository) Update(vehicle *models.Vehicles) (models.Vehicles, e
 
 func NewVehicleRepository(db *gorm.DB) VehicleRepositoryInt {
 	return &vehicleRepository{db}
+}
+func (r *vehicleRepository) GetVehicleByMobile(mobNum string) (*models.Vehicles, error) {
+
+	vehicle := models.Vehicles{}
+	error := r.db.Model(models.Vehicles{}).Where("mobile=?", mobNum).First(&vehicle).Error
+
+	if error != nil {
+		return &models.Vehicles{}, error
+	}
+
+	return &vehicle, nil
 }

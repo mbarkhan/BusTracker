@@ -118,8 +118,6 @@ func (r *userHandler) Login(c *gin.Context) {
 	mobnumber := c.Query("mobile")
 	password := c.Query("password")
 
-	fmt.Printf("mobile>>", mobnumber)
-
 	user, err := r.service.GetUserByMobile(mobnumber)
 	if err != nil {
 		c.IndentedJSON(http.StatusBadRequest, gin.H{"message": err})
@@ -136,13 +134,23 @@ func (r *userHandler) Login(c *gin.Context) {
 		c.IndentedJSON(http.StatusBadRequest, gin.H{"message": err}) //password Invalid
 		return
 	}
+	// check user is verified or not
+	cmp_user, err := r.service.UserSubmittedCompanies(int(user.ID))
+	if err != nil {
+		c.IndentedJSON(http.StatusBadRequest, gin.H{"message": err}) //
+		return
+	}
+	if cmp_user == nil {
+		c.IndentedJSON(http.StatusBadRequest, gin.H{"message": "Company for this user not found"}) // No Company for this user
+		return
+	}
 
-	token, err := utils.NewToken(user.ID)
+	token, err := utils.NewToken(user.ID, user.UserType)
 	if err != nil {
 		c.IndentedJSON(http.StatusBadRequest, gin.H{"message": err}) //unable to create token
 		return
 	}
 
-	c.IndentedJSON(http.StatusOK, gin.H{"user": user, "token": fmt.Sprintf("Bearer %s", token)})
+	c.IndentedJSON(http.StatusOK, gin.H{"user": user, "companies": cmp_user, "token": fmt.Sprintf("Bearer %s", token)})
 	return
 }

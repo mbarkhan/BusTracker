@@ -13,6 +13,7 @@ type UserRepositoryInt interface {
 	Delete(int) error
 	List() ([]models.User, error)
 	GetUserByMobile(string) (*models.User, error)
+	UserSubmittedCompanies(int) (*[]models.Company_Users, error)
 }
 
 type userRepository struct {
@@ -76,4 +77,17 @@ func (r *userRepository) GetUserByMobile(mobNum string) (*models.User, error) {
 	}
 
 	return &user, nil
+}
+
+// Check the User Is confirmed by Admin and the Expiration Date
+func (r *userRepository) UserSubmittedCompanies(userId int) (*[]models.Company_Users, error) {
+	comany_user := []models.Company_Users{}
+	err := r.db.Model(models.Company_Users{}).Where("f_user_id=?", userId).Scan(&comany_user).Error
+
+	if err != nil {
+		return nil, err
+	}
+
+	return &comany_user, nil
+
 }

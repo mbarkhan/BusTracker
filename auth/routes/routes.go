@@ -59,5 +59,6 @@ func Api(r *gin.Engine) {
 	apiGroup.PUT("/vehicle", vehicleHandler.Update)
 	apiGroup.DELETE("/vehicle/:id", vehicleHandler.Delete)
 	apiGroup.GET("/vehicle", vehicleHandler.List)
+	apiGroup.GET("/vehicle/login", vehicleHandler.List)
 
 }

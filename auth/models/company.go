@@ -7,11 +7,12 @@ import (
 type Company struct {
 	gorm.Model
 	//Auto ID
-	Name        string  `json:"name"`
-	AdminName   string  `json:"admin_name"`
-	AdminFamily string  `jaon:"admin_family"`
-	Mobile      string  `json:"mobile" gorm:"unique"`
-	Longitude   float64 `json:"longitude"`
-	Latitude    float64 `json:"latitude"`
-	Description string  `json:"description"`
+	Name        string       `json:"name"`
+	Longitude   float64      `json:"longitude"`
+	Latitude    float64      `json:"latitude"`
+	Address     string       `json:"address"`
+	Description string       `json:"description"`
+	FCityId     int          `json:"city_id"`
+	Users       []User       `gorm:foreignKey:FCompanyId`
+	UserCredits []UserCredit `gorm:foreignKey:FCompanyId`
 }

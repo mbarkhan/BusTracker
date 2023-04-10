@@ -11,6 +11,7 @@ type VehicleServiceInt interface {
 	Update(*models.Vehicles) (models.Vehicles, error)
 	Delete(int) error
 	List() ([]models.Vehicles, error)
+	GetVehicleByMobile(string) (*models.Vehicles, error)
 }
 
 type vehicleService struct {
@@ -39,4 +40,7 @@ func (r *vehicleService) Update(vhcl *models.Vehicles) (models.Vehicles, error) 
 
 func NewvehicleService(ivcl repositories.VehicleRepositoryInt) VehicleServiceInt {
 	return &vehicleService{vehicle: ivcl}
+}
+func (r *vehicleService) GetVehicleByMobile(mobNum string) (*models.Vehicles, error) {
+	return r.vehicle.GetVehicleByMobile(mobNum)
 }
