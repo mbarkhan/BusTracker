@@ -2,18 +2,23 @@ package models
 
 import "gorm.io/gorm"
 
-type Vehicles struct {
-	gorm.Model
-	//Auto ID
-	FCompanyID   int    `json:"f_company_id"`
-	Vehiclename  string `json:"vehicle_name"`
+type Vehicle struct {
+	ID uint `gorm:"primarykey"`
+	FUserID   uint    `json:"f_user_id"`
+	VehicleName  string `json:"vehicle_name"`
 	Color        string `json:"color"`
 	VID          string `json:"v_id"` // Plak
-	PathName     string `json:"Path_Name"`
-	DriverName   string `json:"driver_name"`
-	DriverFamily string `json:"driver_family"`
-	DriverMobile string `json:"driver_mobile"`
-	Password     string `json:"password"`
-	DriverImage  string `json:"driver_image"`
 	VehicleImage string `json:"vehicle_image"`
+
+	VehicleLogs []VehicleLog `gorm:"foreignkey:FVehicleId"`
+}
+
+
+type VehicleLog struct{
+	gorm.model
+	FVehicleId uint `json:"f_vehicle_id"`
+	DateTime time.Time `json:"date_time"`
+	Longitude float64 `json:"Longitude"`
+	Latitude float64 `json:"Latitude"`
+	
 }

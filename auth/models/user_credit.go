@@ -6,13 +6,21 @@ import (
 	"gorm.io/gorm"
 )
 
-type User_Credit struct {
+type UserCredit struct {
 	gorm.Model
 	// Auto ID added by gorm
-	UserID      int       `json:"userID"`
-	CompanyID   int       `json:"companyID"`
-	Deposit     float32   `json:"deposit"` //The Amount of money that has been deposited
+	FUserID      uint       `json:"f_user_id"`
+	FCompanyID   uint       `json:"f_company_id"`
+	FTarrifID	uint `json:"f_tariff_id"`
 	BankTx      string    `json:"bankTx"`  //Banking Transaction ID
 	DepositDate time.Time `json:"depositDate"`
-	CreditDays  int       `json:"creditDays"` //
 }
+
+type Tariff struc{
+	ID uint `gorm:"primarykey"`
+	Tariff string `json:"tariff"`
+	Days uint16 `json:"days"`
+	Active bool `json:"active"`
+	UserCredits []UserCredit `gorm:"foreignkey:FTariffID"`
+}
+
