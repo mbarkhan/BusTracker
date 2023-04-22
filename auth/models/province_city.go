@@ -1,6 +1,6 @@
 package models
 
-type  Province struc{
+type  Province struct{
 	ID uint `gorm:"primarykey"`
 	Name string `json:"name"`
 	Cities []City `gorm:"foreignkey:FProvinceId"`
