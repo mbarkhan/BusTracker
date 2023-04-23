@@ -6,18 +6,18 @@ import (
 )
 
 type VehicleServiceInt interface {
-	Create(*models.Vehicles) (models.Vehicles, error)
-	Read(int) (models.Vehicles, error)
-	Update(*models.Vehicles) (models.Vehicles, error)
+	Create(*models.Vehicle) (models.Vehicle, error)
+	Read(int) (models.Vehicle, error)
+	Update(*models.Vehicle) (models.Vehicle, error)
 	Delete(int) error
-	List() ([]models.Vehicles, error)
+	List() ([]models.Vehicle, error)
 }
 
 type vehicleService struct {
 	vehicle repositories.VehicleRepositoryInt
 }
 
-func (r *vehicleService) Create(vhcl *models.Vehicles) (models.Vehicles, error) {
+func (r *vehicleService) Create(vhcl *models.Vehicle) (models.Vehicle, error) {
 	return r.vehicle.Create(vhcl)
 }
 
@@ -25,15 +25,15 @@ func (r *vehicleService) Delete(vhcl int) error {
 	return r.vehicle.Delete(vhcl)
 }
 
-func (r *vehicleService) List() ([]models.Vehicles, error) {
+func (r *vehicleService) List() ([]models.Vehicle, error) {
 	return r.vehicle.List()
 }
 
-func (r *vehicleService) Read(cmpId int) (models.Vehicles, error) {
+func (r *vehicleService) Read(cmpId int) (models.Vehicle, error) {
 	return r.vehicle.Read(cmpId)
 }
 
-func (r *vehicleService) Update(vhcl *models.Vehicles) (models.Vehicles, error) {
+func (r *vehicleService) Update(vhcl *models.Vehicle) (models.Vehicle, error) {
 	return r.vehicle.Update(vhcl)
 }
 

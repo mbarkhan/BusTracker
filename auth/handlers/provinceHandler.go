@@ -9,7 +9,7 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-type CityHandlerInt interface {
+type ProvinceHandlerInt interface {
 	Create(c *gin.Context)
 	Read(c *gin.Context)
 	Update(c *gin.Context)
@@ -17,16 +17,16 @@ type CityHandlerInt interface {
 	List(c *gin.Context)
 }
 
-type cityHandler struct {
-	service services.CityServiceInt
+type provinceHandler struct {
+	service services.ProvinceServiceInt
 }
 
-func NewCityHandler(service services.CityServiceInt) CityHandlerInt {
-	return &cityHandler{service}
+func NewProvinceHandler(service services.ProvinceServiceInt) ProvinceHandlerInt {
+	return &provinceHandler{service}
 }
 
-func (r *cityHandler) Create(c *gin.Context) {
-	var item models.City
+func (r *provinceHandler) Create(c *gin.Context) {
+	var item models.Province
 	err := c.BindJSON(&item)
 	if err != nil {
 		c.IndentedJSON(http.StatusBadRequest, gin.H{"message": err})
@@ -43,7 +43,7 @@ func (r *cityHandler) Create(c *gin.Context) {
 	c.IndentedJSON(http.StatusOK, gin.H{"message": item})
 }
 
-func (r *cityHandler) Read(c *gin.Context) {
+func (r *provinceHandler) Read(c *gin.Context) {
 	itemId, err := strconv.Atoi(c.Param("id"))
 
 	if err != nil {
@@ -51,7 +51,7 @@ func (r *cityHandler) Read(c *gin.Context) {
 		return
 	}
 
-	item := models.City{}
+	item := models.Province{}
 
 	item, err = r.service.Read(itemId)
 
@@ -63,8 +63,8 @@ func (r *cityHandler) Read(c *gin.Context) {
 	c.IndentedJSON(http.StatusOK, gin.H{"message": item})
 }
 
-func (r *cityHandler) Update(c *gin.Context) {
-	item := models.City{}
+func (r *provinceHandler) Update(c *gin.Context) {
+	item := models.Province{}
 
 	err := c.BindJSON(&item)
 
@@ -83,7 +83,7 @@ func (r *cityHandler) Update(c *gin.Context) {
 	c.IndentedJSON(http.StatusOK, item)
 }
 
-func (r *cityHandler) Delete(c *gin.Context) {
+func (r *provinceHandler) Delete(c *gin.Context) {
 	itemId, err := strconv.Atoi(c.Param("id"))
 
 	if err != nil {
@@ -102,7 +102,7 @@ func (r *cityHandler) Delete(c *gin.Context) {
 	c.IndentedJSON(http.StatusOK, gin.H{"message": "City deleted successfully."})
 }
 
-func (r *cityHandler) List(c *gin.Context) {
+func (r *provinceHandler) List(c *gin.Context) {
 	item, err := r.service.List()
 	if err != nil {
 		c.IndentedJSON(http.StatusBadRequest, err)

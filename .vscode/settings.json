@@ -1,0 +1,5 @@
+{
+    "go.alternateTools": {
+    "go.goroot": "/snap/go/current",
+    }
+}

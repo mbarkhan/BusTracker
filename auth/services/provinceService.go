@@ -33,10 +33,10 @@ func (r *provinceService) Read(itemId int) (models.Province, error) {
 	return r.thisSrvc.Read(itemId)
 }
 
-func (r *rovinceService) Update(item *models.Province) (models.Province, error) {
+func (r *provinceService) Update(item *models.Province) (models.Province, error) {
 	return r.thisSrvc.Update(item)
 }
 
 func NewrovinceService(item repositories.ProvinceRepositoryInt) ProvinceServiceInt {
-	return &ProvinceService{thisSrvc: item}
+	return &provinceService{thisSrvc: item}
 }

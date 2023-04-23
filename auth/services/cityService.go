@@ -3,23 +3,21 @@ package services
 import (
 	"githubmbarkhanBusTracker/auth/models"
 	"githubmbarkhanBusTracker/auth/repositories"
-	"time"
 )
 
 type CityServiceInt interface {
-	Create(*models.city) (models.city, error)
-	Read(int) (models.city, error)
-	Update(*models.city) (models.city, error)
+	Create(*models.City) (models.City, error)
+	Read(int) (models.City, error)
+	Update(*models.City) (models.City, error)
 	Delete(int) error
-	List() ([]models.city, error)
+	List() ([]models.City, error)
 }
 
 type cityService struct {
 	thisSrvc repositories.CityRepositoryInt
 }
 
-
-func (r *cityService) Create(item *models.city) (models.city, error) {
+func (r *cityService) Create(item *models.City) (models.City, error) {
 	return r.thisSrvc.Create(item)
 }
 
@@ -27,18 +25,18 @@ func (r *cityService) Delete(item int) error {
 	return r.thisSrvc.Delete(item)
 }
 
-func (r *cityService) List() ([]models.city, error) {
+func (r *cityService) List() ([]models.City, error) {
 	return r.thisSrvc.List()
 }
 
-func (r *cityService) Read(itemId int) (models.city, error) {
-	return r.thisSrvc.Read(cmpUserId)
+func (r *cityService) Read(itemId int) (models.City, error) {
+	return r.thisSrvc.Read(itemId)
 }
 
-func (r *cityService) Update(cmpUser *models.city) (models.city, error) {
+func (r *cityService) Update(itemId *models.City) (models.City, error) {
 	return r.thisSrvc.Update(itemId)
 }
 
-func NewCityService(item repositories.CompanyUserRepositoryInt) CityServiceInt {
-	return &companyUserService{thisSrvc: item}
+func NewCityService(item repositories.CityRepositoryInt) CityServiceInt {
+	return &cityService{thisSrvc: item}
 }

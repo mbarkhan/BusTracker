@@ -26,7 +26,7 @@ func NewVehicleHandler(service services.VehicleServiceInt) VehicleHandlerInt {
 }
 
 func (r *vehicleHandler) Create(c *gin.Context) {
-	var vhcle models.Vehicles
+	var vhcle models.Vehicle
 	err := c.BindJSON(&vhcle)
 	if err != nil {
 		c.IndentedJSON(http.StatusBadRequest, gin.H{"message": err})
@@ -51,7 +51,7 @@ func (r *vehicleHandler) Read(c *gin.Context) {
 		return
 	}
 
-	vhcl := models.Vehicles{}
+	vhcl := models.Vehicle{}
 
 	vhcl, err = r.service.Read(vhclId)
 
@@ -64,7 +64,7 @@ func (r *vehicleHandler) Read(c *gin.Context) {
 }
 
 func (r *vehicleHandler) Update(c *gin.Context) {
-	vhcl := models.Vehicles{}
+	vhcl := models.Vehicle{}
 
 	err := c.BindJSON(&vhcl)
 

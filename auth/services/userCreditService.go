@@ -6,8 +6,8 @@ import (
 )
 
 type UserCreditServiceInt interface {
-	Create(*models.User_Credit) (models.User_Credit, error)
-	Read(int) ([]models.User_Credit, error)
+	Create(*models.UserCredit) (models.UserCredit, error)
+	Read(uint) ([]models.UserCredit, error)
 }
 
 type userCreditService struct {
@@ -18,14 +18,14 @@ func NewUserCreditService(iuser repositories.UserCreditRepositoryInt) UserCredit
 	return &userCreditService{userCredit: iuser}
 }
 
-func (r *userCreditService) Create(userCredit *models.User_Credit) (models.User_Credit, error) {
+func (r *userCreditService) Create(userCredit *models.UserCredit) (models.UserCredit, error) {
 	var err error
 	if err != nil {
-		return models.User_Credit{}, err
+		return models.UserCredit{}, err
 	}
 	return r.userCredit.Create(userCredit)
 }
 
-func (r *userCreditService) Read(userId int) ([]models.User_Credit, error) {
+func (r *userCreditService) Read(userId uint) ([]models.UserCredit, error) {
 	return r.userCredit.Read(userId)
 }

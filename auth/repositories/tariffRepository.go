@@ -27,7 +27,7 @@ func (r *tarrifsRepository) Create(item *models.Tariff) (models.Tariff, error) {
 	if err != nil {
 		return models.Tariff{}, err
 	}
-	return *city, nil
+	return *item, nil
 }
 
 func (r *tarrifsRepository) Delete(id int) error {
