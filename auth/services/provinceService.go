@@ -37,6 +37,6 @@ func (r *provinceService) Update(item *models.Province) (models.Province, error)
 	return r.thisSrvc.Update(item)
 }
 
-func NewrovinceService(item repositories.ProvinceRepositoryInt) ProvinceServiceInt {
+func NewProvinceService(item repositories.ProvinceRepositoryInt) ProvinceServiceInt {
 	return &provinceService{thisSrvc: item}
 }

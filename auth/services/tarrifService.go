@@ -5,7 +5,7 @@ import (
 	"githubmbarkhanBusTracker/auth/repositories"
 )
 
-type TarrifServiceInt interface {
+type TariffServiceInt interface {
 	Create(*models.Tariff) (models.Tariff, error)
 	Read(int) (models.Tariff, error)
 	Update(*models.Tariff) (models.Tariff, error)
@@ -13,30 +13,30 @@ type TarrifServiceInt interface {
 	List() ([]models.Tariff, error)
 }
 
-type tarrifService struct {
-	thisSrvc repositories.TarrifsRepositoryInt
+type tariffService struct {
+	thisSrvc repositories.TariffRepositoryInt
 }
 
-func (r *tarrifService) Create(item *models.Tariff) (models.Tariff, error) {
+func (r *tariffService) Create(item *models.Tariff) (models.Tariff, error) {
 	return r.thisSrvc.Create(item)
 }
 
-func (r *tarrifService) Delete(itemId int) error {
+func (r *tariffService) Delete(itemId int) error {
 	return r.thisSrvc.Delete(itemId)
 }
 
-func (r *tarrifService) List() ([]models.Tariff, error) {
+func (r *tariffService) List() ([]models.Tariff, error) {
 	return r.thisSrvc.List()
 }
 
-func (r *tarrifService) Read(itemId int) (models.Tariff, error) {
+func (r *tariffService) Read(itemId int) (models.Tariff, error) {
 	return r.thisSrvc.Read(itemId)
 }
 
-func (r *tarrifService) Update(item *models.Tariff) (models.Tariff, error) {
+func (r *tariffService) Update(item *models.Tariff) (models.Tariff, error) {
 	return r.thisSrvc.Update(item)
 }
 
-func NewTarrifService(item repositories.TarrifsRepositoryInt) TarrifServiceInt {
-	return &tarrifService{thisSrvc: item}
+func NewTarrifService(item repositories.TariffRepositoryInt) TariffServiceInt {
+	return &tariffService{thisSrvc: item}
 }

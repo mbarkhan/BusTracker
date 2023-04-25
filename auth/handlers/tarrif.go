@@ -18,10 +18,10 @@ type TarrifHandlerInt interface {
 }
 
 type tarrrifHandler struct {
-	service services.TarrifServiceInt
+	service services.TariffServiceInt
 }
 
-func NewTarrrifHandler(service services.TarrifServiceInt) TarrifHandlerInt {
+func NewTarrrifHandler(service services.TariffServiceInt) TarrifHandlerInt {
 	return &tarrrifHandler{service}
 }
 

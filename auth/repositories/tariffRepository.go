@@ -6,7 +6,7 @@ import (
 	"gorm.io/gorm"
 )
 
-type TarrifsRepositoryInt interface {
+type TariffRepositoryInt interface {
 	Create(*models.Tariff) (models.Tariff, error)
 	Read(int) (models.Tariff, error)
 	Update(*models.Tariff) (models.Tariff, error)
@@ -14,15 +14,15 @@ type TarrifsRepositoryInt interface {
 	List() ([]models.Tariff, error)
 }
 
-type tarrifsRepository struct {
+type tariffRepository struct {
 	db *gorm.DB
 }
 
-func NewTarrifsRepository(db *gorm.DB) TarrifsRepositoryInt {
-	return &tarrifsRepository{db}
+func NewTariffsRepository(db *gorm.DB) TariffRepositoryInt {
+	return &tariffRepository{db}
 }
 
-func (r *tarrifsRepository) Create(item *models.Tariff) (models.Tariff, error) {
+func (r *tariffRepository) Create(item *models.Tariff) (models.Tariff, error) {
 	err := r.db.Create(&item).Error
 	if err != nil {
 		return models.Tariff{}, err
@@ -30,7 +30,7 @@ func (r *tarrifsRepository) Create(item *models.Tariff) (models.Tariff, error) {
 	return *item, nil
 }
 
-func (r *tarrifsRepository) Delete(id int) error {
+func (r *tariffRepository) Delete(id int) error {
 	err := r.db.Delete(&models.Tariff{}, id).Error
 	if err != nil {
 		return err
@@ -38,7 +38,7 @@ func (r *tarrifsRepository) Delete(id int) error {
 	return nil
 }
 
-func (r *tarrifsRepository) List() ([]models.Tariff, error) {
+func (r *tariffRepository) List() ([]models.Tariff, error) {
 	items := []models.Tariff{}
 	var err error
 
@@ -50,7 +50,7 @@ func (r *tarrifsRepository) List() ([]models.Tariff, error) {
 	return items, nil
 }
 
-func (r *tarrifsRepository) Read(id int) (models.Tariff, error) {
+func (r *tariffRepository) Read(id int) (models.Tariff, error) {
 	item := models.Tariff{}
 	err := r.db.First(&item, id).Error
 	if err != nil {
@@ -59,7 +59,7 @@ func (r *tarrifsRepository) Read(id int) (models.Tariff, error) {
 	return item, nil
 }
 
-func (r *tarrifsRepository) Update(item *models.Tariff) (models.Tariff, error) {
+func (r *tariffRepository) Update(item *models.Tariff) (models.Tariff, error) {
 	err := r.db.Save(&item).Error
 	if err != nil {
 		return models.Tariff{}, err
