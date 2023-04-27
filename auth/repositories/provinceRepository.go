@@ -39,7 +39,7 @@ func (r *provincesRepository) Delete(id int) error {
 }
 
 func (r *provincesRepository) List() ([]models.Province, error) {
-	provincees := []models.Province{}
+	provinces := []models.Province{}
 	var err error
 
 	err = r.db.Find(&provinces).Error
